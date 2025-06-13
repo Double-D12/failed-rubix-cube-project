@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>3D Rubik's Cube Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://esm.sh/three@0.160.0",
+        "three/addons/": "https://esm.sh/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="gameContainer">
+    <div class="floating-cubes" id="floatingCubes"></div>
+    <div class="particles" id="particles"></div>
+    
+    <div id="ui">
+      <h1>3D RUBIK'S CUBE</h1>
+      <div id="moveCounter">Moves: 0</div>
+      <div id="timer">00:00</div>
+    </div>
+    
+    <div id="controls">
+      <button class="glow-btn" id="scrambleBtn">Scramble</button>
+      <button class="liquid-btn" id="resetBtn"><span>Reset</span></button>
+    </div>
+    
+    <div id="instructions">
+      <h3>HOW TO PLAY</h3>
+      <p>• Click/Tap faces to rotate them</p>
+      <p>• Drag to orbit around the cube</p>
+      <p>• Pinch to zoom in/out</p>
+      <p>• Solve all sides to the same color!</p>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+  <script src="js/backgroundEffects.js"></script>
+</body>
+</html>

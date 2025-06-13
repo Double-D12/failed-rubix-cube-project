@@ -1,0 +1,310 @@
+:root {
+  --glow-color: hsl(186, 100%, 69%);
+  --cube-color: #FF8C00;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at center, #1a1a2e, #16213e, #0f3460);
+  font-family: 'Orbitron', sans-serif;
+  overflow: hidden;
+  color: white;
+  perspective: 1000px;
+  touch-action: none;
+  height: 100vh;
+  width: 100vw;
+}
+
+#gameContainer {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#ui {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  color: white;
+  text-shadow: 0 0 10px var(--glow-color);
+  animation: pulse 2s infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  from { text-shadow: 0 0 10px var(--glow-color); }
+  to { text-shadow: 0 0 20px var(--glow-color), 0 0 30px var(--glow-color); }
+}
+
+#moveCounter, #timer {
+  font-size: 1rem;
+  margin-top: 8px;
+  background: rgba(0,0,0,0.5);
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--glow-color);
+  box-shadow: 0 0 10px var(--glow-color);
+  display: inline-block;
+  margin-right: 10px;
+}
+
+#controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.glow-btn {
+  position: relative;
+  background: rgba(0,0,0,0.7);
+  border: 2px solid var(--glow-color);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 0 10px var(--glow-color), inset 0 0 5px var(--glow-color);
+  font-size: 14px;
+}
+
+.glow-btn:hover {
+  background: rgba(0,0,0,0.9);
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px var(--glow-color), inset 0 0 10px var(--glow-color);
+}
+
+.glow-btn:active {
+  transform: translateY(1px);
+}
+
+.glow-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    transparent,
+    transparent,
+    transparent,
+    var(--glow-color)
+  );
+  transform: rotate(30deg);
+  animation: shine 3s infinite;
+  opacity: 0.5;
+}
+
+@keyframes shine {
+  0% { transform: rotate(30deg) translate(-30%, -30%); }
+  100% { transform: rotate(30deg) translate(30%, 30%); }
+}
+
+#instructions {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 15px;
+  border-radius: 15px;
+  max-width: 250px;
+  font-size: 14px;
+  border: 1px solid var(--glow-color);
+  box-shadow: 0 0 20px rgba(0, 206, 209, 0.5);
+  transform-style: preserve-3d;
+  transform: rotateY(5deg);
+  transition: transform 0.5s ease;
+  pointer-events: none;
+}
+
+#instructions h3 {
+  margin-top: 0;
+  color: var(--glow-color);
+  text-shadow: 0 0 5px var(--glow-color);
+  margin-bottom: 8px;
+}
+
+#instructions p {
+  margin-bottom: 6px;
+}
+
+.liquid-btn {
+  position: relative;
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  font-size: 14px;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s;
+  border-radius: 50px;
+}
+
+.liquid-btn span {
+  position: relative;
+  z-index: 2;
+}
+
+.liquid-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #00d2ff, #3a7bd5, #00d2ff);
+  background-size: 200% 200%;
+  animation: liquid 4s ease infinite;
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 70%,
+    80% 90%,
+    20% 90%,
+    0% 70%
+  );
+  transition: all 0.3s;
+  border-radius: 50px;
+}
+
+.liquid-btn:hover::before {
+  transform: scale(1.05);
+}
+
+.liquid-btn:active::before {
+  transform: scale(0.95);
+}
+
+@keyframes liquid {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.floating-cubes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.floating-cube {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(0, 206, 209, 0.3);
+  border: 1px solid var(--glow-color);
+  animation: float 15s infinite linear;
+  opacity: 0;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(720deg) translateX(100px);
+    opacity: 0;
+  }
+}
+
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--glow-color);
+  border-radius: 50%;
+  animation: particle-float 10s infinite linear;
+  opacity: 0;
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(50px);
+    opacity: 0;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #ui {
+    top: 10px;
+    left: 10px;
+    font-size: 12px;
+  }
+  
+  #moveCounter, #timer {
+    font-size: 0.9rem;
+    padding: 4px 8px;
+  }
+  
+  #instructions {
+    top: auto;
+    bottom: 80px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+    font-size: 12px;
+  }
+  
+  .glow-btn, .liquid-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+}
